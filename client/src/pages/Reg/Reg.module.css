@@ -1,0 +1,42 @@
+.RegFlag {
+    background-image: url(../../../Public/Image/BG/1.png);
+    height: 100vh;
+    background-size: cover;
+}
+
+
+
+.RegDiv{
+display: flex;
+justify-content: center;
+align-items: start;
+    background-size: cover;
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    height: 600px;
+    width: 100%;
+}
+
+.RegForm {
+    display: flex;
+    flex-direction: column;
+    background: transparent;
+    /* background-color: rgba(255, 4, 4, 0.455); */
+}
+.regBox{
+    background: transparent;
+    margin-top: 100px;
+    background-color: rgba(168, 172, 174, 0.573);
+    border-radius: 10px;
+    border: 2px solid rgb(255, 255, 255);
+    width: 400px;
+    height: 450px;
+}
+
+.errorMessage {
+    color: #ff0000;
+    font-size: 20px;
+    font-weight: 900;
+
+}

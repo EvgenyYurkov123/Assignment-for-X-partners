@@ -1,0 +1,47 @@
+.NavFlag {
+    display: flex;
+    height: 50px;
+    width: 100vw;
+
+
+}
+
+.NavBegin {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    height: 50px;
+    width: 100vw;
+    background: linear-gradient(to right, #3068f6, #03c7fd);
+}
+
+.NavLogo {
+    margin-left: 60px;
+}
+
+.Hello {
+    margin-right: 30px;
+    color: #000000;
+
+}
+
+.Hello1 {
+    color: #8184f0;
+    font-weight: 900;
+    margin-right: 30px;
+}
+
+
+.links {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-right: 20px;
+}
+
+.links a {
+    padding-right: 15px;
+    color: #066dfc;
+
+}

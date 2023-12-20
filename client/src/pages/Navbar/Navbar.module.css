@@ -1,0 +1,32 @@
+
+.NavFlag {
+  display: flex;
+  flex-direction: column;
+}
+
+.MenuCategories {
+
+}
+/* .container {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+} */
+
+.podNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0;
+  background-color: white;
+}
+
+.podNav3 {
+  display: flex;
+}
+
+.DivFavBas {
+  display: flex;
+}
