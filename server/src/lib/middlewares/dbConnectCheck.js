@@ -1,5 +1,4 @@
-
-const { sequelize } = require('../db/models');
+const { sequelize } = require('../../../db/models');
 
 module.exports = async () => {
   try {
@@ -9,6 +8,3 @@ module.exports = async () => {
     console.error('\x1b[31mБаза данных Не подключена! \x1b[0m', error.message);
   }
 };
-
-
-
