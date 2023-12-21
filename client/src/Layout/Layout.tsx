@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer/Footer";
-import NavBar from "../pages/Navbar/Navbar";
+import NavBar from "../Pages/Navbar/Navbar";
 import styles from "./Layout.module.css";
 
 interface LayoutProps {

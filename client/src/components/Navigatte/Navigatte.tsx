@@ -18,8 +18,8 @@ export default function Navigatte() {
                 await response.json();
                 setUser({
                     ...user,
-                    userName: '',
-                    userEmail: '',
+                    name: '',
+                    email: '',
 
                 });
                 localStorage.removeItem('token');
@@ -43,6 +43,9 @@ export default function Navigatte() {
 
 
 
+                            <Link className={styles.LinkAccount} to={'/account'} >
+                                Личный кабинет
+                            </Link>
                             <Link className={styles.LinkExit} to={'/'} onClick={logoutHandler}>
                                 Выйти
                             </Link>
@@ -53,7 +56,7 @@ export default function Navigatte() {
                             <Link className={styles.LinkLogin} to="/login">
                                 Войти
                             </Link>
-                            <Link className={styles.LinkReg} to="/reg">
+                            <Link className={styles.LinkReg} to="/register">
                                 Регистрация
                             </Link>
                         </>

@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './Footer.module.css'
 
 export default function Footer() {
@@ -6,7 +5,8 @@ export default function Footer() {
     <div className={styles.FooterFlag}>
       <div className={styles.foo}>
         <div className={styles.copyRight}>
-          © 2023 Copyright for X-partners
+         <p> © 2023 Copyright for</p> 
+         <a className={styles.footerLinkXPartners}>X-partners</a>
         </div>
       </div>
     </div>

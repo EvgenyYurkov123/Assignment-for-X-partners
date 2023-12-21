@@ -6,6 +6,7 @@
     width: 100vw;
         background: linear-gradient(to right,#03c7fd, #3068f6 );
     flex-shrink: 0;
+    bottom: 0;
 }
 
 .foo {
@@ -13,5 +14,14 @@
 }
 
 .copyRight {
+    display: flex;
     margin-right: 20px;
+}
+.footerLinkXPartners {
+padding-left: 15px;
+font-weight: 900;
+}
+.footerLinkXPartners::first-letter {
+    color: #66ef66;
+    font-size:medium;
 }

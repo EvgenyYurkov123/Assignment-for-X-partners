@@ -1,9 +1,15 @@
-  import React, { useContext, useState } from 'react'
-  import { useNavigate } from 'react-router-dom'
-  import { ContextAll } from '../../context/context'
-  import styles from './Login.module.css'
-  import { useFormik } from 'formik'
-  import {
+/**
+ * Компонент React для входа пользователя.
+ * @component
+ */
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ContextAll } from '../../context/context';
+import { IUser, ILog } from '../../types/types';
+import styles from '../Login/Login.module.css';
+import { useFormik } from 'formik';
+import { jwtDecode } from 'jwt-decode';
+import {
     Box,
     Button,
     Flex,
@@ -11,120 +17,112 @@
     FormErrorMessage,
     FormLabel,
     Input,
-    VStack
-  } from '@chakra-ui/react'
+    VStack,
+} from '@chakra-ui/react';
 
-  export default function Login(): JSX.Element {
-    const { user, setUser } = useContext(ContextAll)
-    const [errorMsg, setErrorMsg] = useState('')
 
-    const navigate = useNavigate()
+export default function Login() {
+    const { user, setUser } = useContext(ContextAll);
+    const [errorMsg, setErrorMsg] = useState('');
+    const navigate = useNavigate();
 
-    interface LoginFormValues {
-      
-        userName: string;
-        userEmail: string;
-        password: string;
     
-    }
+    const submitLoginHandler = async (values: ILog) => {
+        try {
+            const response = await fetch('http://localhost:3002/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify(values),
+            });
 
-    const submitLoginHandler = async (values: LoginFormValues): Promise<void> => {
-      try {
-        const response = await fetch('http://localhost:3002/user/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          credentials: 'include',
-          body: JSON.stringify(values)
-        })
+            const result = await response.json();
 
-        const result = await response.json()
-        console.log('user', result)
+            if (response.ok) {
+                const { token } = result;
+                const decodedToken: IUser = jwtDecode(token);
 
-        if (response.ok) {
-          setUser((prevUser) => ({
-            ...prevUser,
-            user: result.userName,
-            authUser: true
-          }))
-          localStorage.setItem('user', JSON.stringify({ user: result.userName, authUser: true }))
-          navigate('/')
-        } else {
-          setErrorMsg(result.error)
-          setTimeout(() => {
-            setErrorMsg('')
-          }, 2000)
+                localStorage.setItem('token', token);
+
+                setUser((prev) => ({
+                    ...prev,
+                    userId: decodedToken.userId,
+                    name: decodedToken.name,
+                    email: decodedToken.email,
+                    iat: decodedToken.iat,
+                    exp: decodedToken.exp,
+                }));
+
+                navigate('/add-edit');
+            } else {
+                setErrorMsg(result.error);
+                setTimeout(() => {
+                    setErrorMsg('');
+                }, 2000);
+            }
+        } catch (error) {
+            console.log(error);
         }
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    
+    };
+
     const formik = useFormik({
-      initialValues: {
-        
-        userName: '',
-        userEmail: '',
-        password: ''
-        
-      },
-      onSubmit: submitLoginHandler
-    })
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        onSubmit: submitLoginHandler,
+    });
 
     return (
-      <div className={styles.LoginFlag}>
-        <div className={styles.LoginDiv}>
-          {!user.authUser && (
-            <Flex className={styles.loginFlex} align="center" justify="center">
-              <Box className={styles.loginBox} p={6} rounded="md">
-                <form className={styles.LoginForm} onSubmit={formik.handleSubmit}>
-                  <VStack p={4} spacing={8} align="flex-start">
-                    <FormControl isInvalid={!!(formik.touched.userEmail && formik.errors.userEmail)}>
-                      <FormLabel htmlFor="userEmail">Почта</FormLabel>
-                      <Input
-                        id="userEmail"
-                        name="userEmail"
-                        type="email"
-                        variant="filled"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.userEmail}
-                        placeholder="Введите почту"
-                      />
-                      <FormErrorMessage>{formik.errors.userEmail}</FormErrorMessage>
-                    </FormControl>
+        <div className={styles.LoginFlag}>
+            <h2>Авторизация</h2>
+            <div className={styles.LoginDiv}>
+                {!user.name && (
+                    <Flex className={styles.loginFlex} align="center" justify="center">
+                        <Box className={styles.loginBox} p={6} rounded="md">
+                            <form className={styles.LoginForm} onSubmit={formik.handleSubmit}>
+                                <VStack p={4} spacing={4} align="flex-start">
+                                    <FormControl isInvalid={Boolean(formik.touched.email && formik.errors.email)}>
+                                        <FormLabel htmlFor="email">Почта</FormLabel>
+                                        <Input
+                                            {...formik.getFieldProps('email')}
+                                            placeholder="Введите почту"
+                                            id="email"
+                                            name="email"
+                                            type="email"
+                                            variant="filled"
+                                        />
+                                        <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
+                                    </FormControl>
 
-                    <FormControl isInvalid={!!formik.errors.password} style={{marginBottom: '30px'}}>
-                      <FormLabel  htmlFor="password">Пароль</FormLabel>
-                      <Input 
-                        id="password"
-                        name="password"
-                        type="password"
-                        variant="filled"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.password}
-                        placeholder="Введите пароль"
-                      />
-                      {formik.errors.password !== null && formik.errors.password !== undefined && (
-                        <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-                      )}
-                    </FormControl>
+                                    <FormControl isInvalid={Boolean(formik.touched.password && formik.errors.password)}>
+                                        <FormLabel htmlFor="password">Пароль</FormLabel>
+                                        <Input
+                                            {...formik.getFieldProps('password')}
+                                            placeholder="Введите пароль"
+                                            id="password"
+                                            name="password"
+                                            type="password"
+                                            variant="filled"
+                                        />
+                                        {formik.errors.password && (
+                                            <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+                                        )}
+                                    </FormControl>
 
-                    {errorMsg !== null && errorMsg !== undefined && errorMsg !== '' && (
-                      <div className={styles.errorMessage}>{errorMsg}</div>
-                    )}
+                                    {errorMsg && <div className={styles.errorMessage}>{errorMsg}</div>}
 
-                    <Button type="submit" colorScheme="blue" width="full">
-                      Войти
-                    </Button>
-                  </VStack>
-                </form>
-              </Box>
-            </Flex>
-          )}
+                                    <Button type="submit" colorScheme="blue" width="full" style={{ marginTop: '20px' }}>
+                                        Войти
+                                    </Button>
+                                </VStack>
+                            </form>
+                        </Box>
+                    </Flex>
+                )}
+            </div>
         </div>
-      </div>
-    )
-  }
+    );
+}
