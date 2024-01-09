@@ -41,7 +41,7 @@ export const MeContextProvider: FC<Props> = ({ children }) => {
       email: "",
       dateOfBirth:"",
       gender: "",
-      photo: File,
+      photo: null,
       iat: 0,
       exp: 0,
     };

@@ -30,10 +30,10 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    photo: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
+    // photo: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
   }, {
     sequelize,
     modelName: 'User',

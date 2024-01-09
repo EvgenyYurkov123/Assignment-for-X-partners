@@ -17,7 +17,7 @@
     width: 100%;
 }
 
-.RegForm {
+.regForm {
     display: flex;
     flex-direction: column;
     background: transparent;
@@ -25,13 +25,14 @@
     padding: 0 20px 20px 20px;
     max-width: 400px;
     width: 100%;
+    
 }
 
 .regBox {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: -70px;
+    margin-top: -60px;
     background: transparent;
     background-color: rgba(51, 187, 255, 0.733);
     border-radius: 10px;
@@ -39,6 +40,7 @@
     width: 100%;
     max-width: 400px;
     box-sizing: border-box;
+   
 }
 
 .errorMessage {
@@ -53,3 +55,4 @@ h2 {
     margin-top: 10px;
     font-size:xx-large;
 }
+

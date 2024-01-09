@@ -3,7 +3,7 @@ import { Layout } from "./Layout/Layout";
 import Home from "./Pages/Home/Home";
 import Register from "./Pages/Register/Register";
 import Login from "./Pages/Login/Login";
-import People from "./Pages/People/People";
+import People from "./Pages/PeoplePage/PeoplePage";
 import Account from "./Pages/Account/Account";
 
 export default function App() {
